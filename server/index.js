@@ -1,10 +1,25 @@
 // this is how we set up a web server (RESTful API) using the express framwork
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 
 // we will use this middleware, so that we can extract the data from the request object
 // this will help us to pass the request object (so we can use the request body)
 app.use(express.json());
+
+// setup and load environment variable (.env)
+require('dotenv').config();
+const port = process.env.PORT || 3000;
+
+mongoose
+	.connect(
+		'mongodb+srv://LudvigB:Carolina14102019@puredocluster.lebp0.mongodb.net/puredo?retryWrites=true&w=majority',
+		{ useNewUrlParser: true, useUnifiedTopology: true }
+	)
+	.then((connectionResult) => {
+		app.listen(port, () => console.log(`Server is running on port ${port}`));
+	})
+	.catch((err) => console.log(err));
 
 app.get('/', (req, res) => {
 	res.send('Welcome to express web server');
@@ -77,9 +92,3 @@ app.delete('/api/todos/:id', (req, res) => {
 		data: todo
 	});
 });
-
-// setup and load environment variable (.env)
-require('dotenv').config();
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => console.log(`Server is running on port ${port}`));
