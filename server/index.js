@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 // we will use this middleware, so that we can extract the data from the request object
-// this will help us to pass the request object
+// this will help us to pass the request object (so we can use the request body)
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -45,6 +45,21 @@ app.post('/api/todos', (req, res) => {
 
 	todos.push(todo);
 	res.send(todo);
+});
+
+app.put('/api/todos/:id', (req, res) => {
+	const selectedTodo = todos.find((todo) => todo.id === parseInt(req.params.id));
+
+	if (!selectedTodo) {
+		return res.status(404).send('The todo cannot be found');
+	}
+
+	selectedTodo.todo = req.body.todo;
+
+	res.send({
+		message: 'Todo updated',
+		data: selectedTodo
+	});
 });
 
 // setup and load environment variable (.env)
