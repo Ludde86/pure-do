@@ -1,4 +1,4 @@
-// this is how we set up a web server using the express framwork
+// this is how we set up a web server (RESTful API) using the express framwork
 const express = require('express');
 const app = express();
 
