@@ -1,11 +1,22 @@
 // this is how we set up a web server (RESTful API) using the express framwork
 const express = require('express');
 const mongoose = require('mongoose');
+
+// import todos routes, so we can just this route as a middleware
+const todos = require('./routes/todos');
+
 const app = express();
 
 // we will use this middleware, so that we can extract the data from the request object
 // this will help us to pass the request object (so we can use the request body)
 app.use(express.json());
+
+app.get('/', (req, res) => {
+	res.send('Welcome to the Pure Todo API');
+});
+
+// use this as a middleware, and forward this (path) request to the todos route, when a user makes a request to this path
+app.use('/api/todos', todos);
 
 // setup and load environment variable (.env)
 require('dotenv').config();
