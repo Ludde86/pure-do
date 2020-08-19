@@ -30,6 +30,11 @@ app.get('/api/todos/:id', (req, res) => {
 
 // create a todo
 app.post('/api/todos', (req, res) => {
+	// terminate this function if there is no todo
+	if (!req.body.todo) {
+		return res.status(400).send('Todo is required'); // bad request
+	}
+
 	// we need a way to pass the request object into our todos array
 	// -> so that we can extract the data from it (request object)
 	// -> to do that, we are going to make use of a middleware
