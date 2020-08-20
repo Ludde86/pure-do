@@ -46,4 +46,14 @@ router.get('/', (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+// PATH: /api/todos/id
+router.get('/:id', (req, res) => {
+	const todoId = req.params.id;
+	Todo.findById(todoId)
+		.then((todo) => {
+			res.send(todo);
+		})
+		.catch((err) => console.log(err));
+});
+
 module.exports = router;
