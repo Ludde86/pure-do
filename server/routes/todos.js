@@ -80,4 +80,17 @@ router.put('/:id', validate, (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+// PATH: /api/todos/id
+router.delete('/:id', (req, res) => {
+	const todoId = req.params.id;
+	Todo.findByIdAndRemove(todoId)
+		.then((result) => {
+			res.send({
+				message: 'Todo successfully removed',
+				data: result
+			});
+		})
+		.catch((err) => console.log(err));
+});
+
 module.exports = router;
