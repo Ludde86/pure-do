@@ -37,37 +37,6 @@ app.get('/', (req, res) => {
 	res.send('Welcome to express web server');
 });
 
-// get all todos
-app.get('/api/todos', (req, res) => {
-	res.send(todos);
-});
-
-// get a single todo
-app.get('/api/todos/:id', (req, res) => {
-	const todo = todos.find((todo) => todo.id === parseInt(req.params.id)); // req.params.id returns a String
-
-	if (!todo) {
-		res.status(404).send('The todo cannot be found');
-	}
-
-	res.send(todo);
-});
-
-app.put('/api/todos/:id', (req, res) => {
-	const selectedTodo = todos.find((todo) => todo.id === parseInt(req.params.id));
-
-	if (!selectedTodo) {
-		return res.status(404).send('The todo cannot be found');
-	}
-
-	selectedTodo.todo = req.body.todo;
-
-	res.send({
-		message: 'Todo updated',
-		data: selectedTodo
-	});
-});
-
 app.delete('/api/todos/:id', (req, res) => {
 	const todo = todos.find((todo) => todo.id === parseInt(req.params.id));
 

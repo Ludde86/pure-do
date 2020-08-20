@@ -56,4 +56,28 @@ router.get('/:id', (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+// PATH: /api/todos/id
+router.put('/:id', validate, (req, res) => {
+	const todoId = req.params.id;
+
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(422).send({ errors: errors.array() });
+	}
+
+	Todo.findById(todoId)
+		.then((todo) => {
+			todo.description = req.body.description;
+			return todo.save();
+		})
+		.then((result) => {
+			res.send({
+				message: 'Todo successfully updated',
+				data: result
+			});
+		})
+		.catch((err) => console.log(err));
+});
+
 module.exports = router;
