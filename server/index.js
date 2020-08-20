@@ -9,6 +9,7 @@ const app = express();
 
 // we will use this middleware, so that we can extract the data from the request object
 // this will help us to pass the request object (so we can use the request body)
+/* we are asking the server to accept or store that data (object), which is enclosed in the body (i.e. req.body) of that (POST or PUT) Request */
 app.use(express.json());
 
 app.get('/', (req, res) => {

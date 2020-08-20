@@ -37,4 +37,13 @@ router.post('/', validate, (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+// PATH: /api/todos
+router.get('/', (req, res) => {
+	Todo.find()
+		.then((todos) => {
+			res.send(todos);
+		})
+		.catch((err) => console.log(err));
+});
+
 module.exports = router;
