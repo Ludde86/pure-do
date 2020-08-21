@@ -9,7 +9,7 @@ import TodoDetailsScreen from '../screens/TodoDetailsScreen';
 import TodoListScreen from '../screens/TodoListScreen';
 
 const Stack = createStackNavigator();
-const Tabs = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 function stackNavigator() {
 	return (
@@ -21,13 +21,22 @@ function stackNavigator() {
 	);
 }
 
+// we need to create about screen as a stack navigator
+function AboutStackNavigator() {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen name="About" component={AboutScreen} />
+		</Stack.Navigator>
+	);
+}
+
 function AppNavigator() {
 	return (
 		<NavigationContainer>
-			<Tabs.Navigator>
-				<Tabs.Screen name="Home" component={stackNavigator} />
-				<Tabs.Screen name="About" component={AboutScreen} />
-			</Tabs.Navigator>
+			<Tab.Navigator>
+				<Tab.Screen name="Home" component={stackNavigator} />
+				<Tab.Screen name="About" component={AboutStackNavigator} />
+			</Tab.Navigator>
 		</NavigationContainer>
 	);
 }

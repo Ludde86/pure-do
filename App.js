@@ -6,10 +6,8 @@ import AppNavigator from './navigation/AppNavigator';
 
 export default function App() {
 	return (
-		<View>
-			<AppNavigator />
-			<StatusBar style="auto" />
-		</View>
+		<AppNavigator />
+		// <StatusBar style="auto" />
 	);
 }
 
