@@ -1,27 +1,56 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, ScrollView, Button } from 'react-native';
 import TodoItem from '../components/TodoItem';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FloatingAction } from 'react-native-floating-action';
 
-const TodoListScreen = () => {
+const TodoListScreen = (props) => {
+	const actions = [
+		{
+			text: 'Add',
+			name: 'bt_add',
+			position: 1
+		},
+		{
+			text: 'Clear',
+			name: 'bt_clear',
+			position: 2
+		}
+	];
+
+	const checkActions = (item) => {
+		switch (item) {
+			case 'bt_add':
+				props.navigation.navigate('AddTodo');
+			case 'bt_clear':
+				console.log('Clear');
+			default:
+				return;
+		}
+	};
+
 	return (
 		<View style={styles.listContainer}>
 			<ScrollView>
 				<TodoItem />
 				<TodoItem />
 			</ScrollView>
-
-			<View style={styles.clearBtn}>
+			<FloatingAction
+				actions={actions}
+				onPressItem={(item) => {
+					checkActions(item);
+				}}
+			/>
+			{/* <View style={styles.clearBtn}>
 				<Button title="Clear" color="#841584" />
-			</View>
+			</View> */}
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	listContainer: {
-		flex: 1,
-		justifyContent: 'space-between'
+		flex: 1
+		// justifyContent: 'space-between'
 	},
 	clearBtn: {}
 });
