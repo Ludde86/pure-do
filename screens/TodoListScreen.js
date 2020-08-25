@@ -22,9 +22,9 @@ const TodoListScreen = (props) => {
 	const checkActions = (item) => {
 		switch (item) {
 			case 'bt_add':
-				props.navigation.navigate('AddTodo');
+				return props.navigation.navigate('AddTodo');
 			case 'bt_clear':
-				console.log('Clear');
+				return console.log('Check actions, Clear');
 			default:
 				return;
 		}
@@ -33,12 +33,13 @@ const TodoListScreen = (props) => {
 	return (
 		<View style={styles.listContainer}>
 			<ScrollView>
-				<TodoItem />
-				<TodoItem />
+				<TodoItem navigation={props.navigation} />
+				<TodoItem navigation={props.navigation} />
 			</ScrollView>
 			<FloatingAction
 				actions={actions}
 				onPressItem={(item) => {
+					console.log('onPress', item);
 					checkActions(item);
 				}}
 			/>

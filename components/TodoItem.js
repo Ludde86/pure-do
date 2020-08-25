@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { FloatingAction } from 'react-native-floating-action';
 
-const TodoItem = () => {
+const TodoItem = (props) => {
 	const actions = [
 		{
 			text: 'Edit',
@@ -45,6 +45,12 @@ const TodoItem = () => {
 			/> */}
 
 				<View style={styles.buttons}>
+					<Button
+						style={styles.detailBtn}
+						title="D"
+						color="#841584"
+						onPress={() => props.navigation.navigate('TodoDetails')}
+					/>
 					<Button style={styles.editBtn} title="E" color="#841584" />
 					<Button style={styles.delBtn} title="-" color="#841584" />
 				</View>
@@ -80,6 +86,7 @@ const styles = StyleSheet.create({
 		minWidth: 50
 	},
 	delBtn: {},
+	detailBtn: {},
 	floatingContainer: {
 		flexDirection: 'column'
 	}
