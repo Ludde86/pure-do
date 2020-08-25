@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import todoReducer from './reducers/todoReducer';
 
 const rootReducer = combineReducers({
-	house: todoReducer
+	todo: todoReducer
 });
 
 // middleware -> for handeling asynchronous operations

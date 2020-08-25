@@ -1,17 +1,17 @@
 import { FETCH_TODOS } from '../actions/todoAction';
 
-const initState = {
+const initialState = {
 	todos: []
 };
 
-export default function(state = initState, action) {
+export default function(state = initialState, action) {
 	switch (action.type) {
 		case FETCH_TODOS:
 			return {
 				...state,
 				todos: action.payload
 			};
-		default:
-			return state;
 	}
+
+	return state;
 }

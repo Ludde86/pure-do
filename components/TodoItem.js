@@ -32,8 +32,10 @@ const TodoItem = (props) => {
 		<TouchableOpacity onPress={() => console.log('Todo clicked')}>
 			<View style={styles.todoContainer}>
 				<View style={styles.infoContainer}>
-					<Text style={styles.description}>Description</Text>
-					<Text style={styles.addedDate}>Date</Text>
+					<Text style={styles.description}>
+						{props.description.length > 30 ? props.description.sclice(0, 30) + '...' : props.description}
+					</Text>
+					<Text style={styles.addedDate}>{props.date}</Text>
 				</View>
 
 				{/* <FloatingAction
