@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { FloatingAction } from 'react-native-floating-action';
 
 const TodoItem = () => {
@@ -29,13 +29,14 @@ const TodoItem = () => {
 	};
 
 	return (
-		<View style={styles.todoContainer}>
-			<View style={styles.infoContainer}>
-				<Text style={styles.description}>Description</Text>
-				<Text style={styles.addedDate}>Date</Text>
-			</View>
+		<TouchableOpacity onPress={() => console.log('Todo clicked')}>
+			<View style={styles.todoContainer}>
+				<View style={styles.infoContainer}>
+					<Text style={styles.description}>Description</Text>
+					<Text style={styles.addedDate}>Date</Text>
+				</View>
 
-			{/* <FloatingAction
+				{/* <FloatingAction
 				actions={actions}
 				actionsPaddingTopBottom={1}
 				onPressBackdrop={toggle}
@@ -43,17 +44,18 @@ const TodoItem = () => {
 				onPressMain={toggle}
 			/> */}
 
-			{/*<View style={styles.buttons}>
-				<Button title="Edit" color="#841584" />
-				<Button title="Delete" color="#841584" />
-	</View>*/}
-		</View>
+				<View style={styles.buttons}>
+					<Button style={styles.editBtn} title="E" color="#841584" />
+					<Button style={styles.delBtn} title="-" color="#841584" />
+				</View>
+			</View>
+		</TouchableOpacity>
 	);
 };
 
 const styles = StyleSheet.create({
 	todoContainer: {
-		height: 250,
+		// height: 250,
 		borderBottomWidth: 2,
 		flexDirection: 'row',
 		justifyContent: 'space-between'
@@ -69,7 +71,15 @@ const styles = StyleSheet.create({
 		fontSize: 12
 	},
 	buttonContainer: { backgroundColor: 'red' },
-	button: { backgroundColor: 'red' },
+	buttons: {
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
+	editBtn: {
+		minHeight: 50,
+		minWidth: 50
+	},
+	delBtn: {},
 	floatingContainer: {
 		flexDirection: 'column'
 	}

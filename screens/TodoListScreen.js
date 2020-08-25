@@ -8,12 +8,14 @@ const TodoListScreen = (props) => {
 		{
 			text: 'Add',
 			name: 'bt_add',
-			position: 1
+			color: 'green',
+			position: 2
 		},
 		{
 			text: 'Clear',
 			name: 'bt_clear',
-			position: 2
+			color: 'red',
+			position: 1
 		}
 	];
 
