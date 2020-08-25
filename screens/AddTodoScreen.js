@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import { Formik } from 'formik';
 
 const AddTodoScreen = () => {
-	const [ input, setInput ] = useState('');
-
 	return (
 		<View style={styles.form}>
-			<View style={styles.formGroup}>
-				<TextInput style={styles.input} value={input} placeholder="..." />
-			</View>
-			<View style={styles.buttonContainer}>
-				<Button title="Add Todo" />
-			</View>
+			<Formik
+				initialValues={{
+					description: ''
+				}}
+				onSubmit={(values) => {
+					console.log(values);
+				}}
+			>
+				{(props) => (
+					<View>
+						<View style={styles.formGroup}>
+							<TextInput
+								style={styles.input}
+								placeholder="..."
+								onChangeText={props.handleChange('description')}
+								value={props.values.description}
+							/>
+						</View>
+						<View style={styles.buttonContainer}>
+							<Button title="Add Todo" onPress={props.handleSubmit} />
+						</View>
+					</View>
+				)}
+			</Formik>
 		</View>
 	);
 };
