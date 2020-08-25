@@ -1,4 +1,4 @@
-import { FETCH_TODOS } from '../actions/todoAction';
+import { FETCH_TODOS, CREATE_TODOS } from '../actions/todoAction';
 
 const initialState = {
 	todos: []
@@ -10,6 +10,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				todos: action.payload
+			};
+		case CREATE_TODOS:
+			return {
+				...state,
+				todos: state.todos.concat(action.payload)
 			};
 	}
 
