@@ -1,6 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 import { Formik } from 'formik';
+import * as yup from 'yup';
+
+// create validation schema for our form
+const formSchema = yup.object({
+	description: yup.string().required().min(3).max(50)
+});
 
 const AddTodoScreen = () => {
 	return (
@@ -9,6 +15,7 @@ const AddTodoScreen = () => {
 				initialValues={{
 					description: ''
 				}}
+				validationSchema={formSchema}
 				onSubmit={(values) => {
 					console.log(values);
 				}}
@@ -22,6 +29,7 @@ const AddTodoScreen = () => {
 								onChangeText={props.handleChange('description')}
 								value={props.values.description}
 							/>
+							<Text style={styles.error}>{props.errors.description}</Text>
 						</View>
 						<View style={styles.buttonContainer}>
 							<Button title="Add Todo" onPress={props.handleSubmit} />
@@ -51,6 +59,9 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		marginTop: 20
+	},
+	error: {
+		color: 'red'
 	}
 });
 
