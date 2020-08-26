@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 // import todos routes, so we can just this route as a middleware
 const todos = require('./routes/todos');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.get('/', (req, res) => {
 
 // use this as a middleware, and forward this (path) request to the todos route, when a user makes a request to this path
 app.use('/api/todos', todos);
+
+app.use('/api/users', auth);
 
 // setup and load environment variable (.env)
 require('dotenv').config();
