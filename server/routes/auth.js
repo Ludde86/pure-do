@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // import the model
 const User = require('../models/User');
@@ -70,8 +71,13 @@ router.post('/login', validate, async (req, res) => {
 	}
 
 	// create and assign a token
+	// -> set up a key paired with the users id
+	// -> this will be encoded in the token
+	// make use of env variables to store this secret key
+	const token = jwt.sign({ _id: user._id, username: user.username }, 'PURESECRET');
 
-	res.send(`Welcome ${user.username}!`);
+	// attach the token to the header of our response (auth-token)
+	res.header('auth-token', token).send({ message: `Welcome ${user.username}!`, token });
 });
 
 module.exports = router;
