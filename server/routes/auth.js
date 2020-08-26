@@ -1,5 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 // import the model
 const User = require('../models/User');
@@ -16,18 +17,33 @@ const validate = [
 router.post('/register', validate, async (req, res) => {
 	const errors = validationResult(req);
 
+	// check for errors
 	if (!errors.isEmpty()) {
 		return res.status(422).json({ errors: errors.array() });
 	}
 
+	// check for unique username in our database
+	const userExists = await User.findOne({ username: req.body.username });
+	if (userExists) {
+		return res.status(400).send('Username already exists');
+	}
+
+	// generate a salt (creates a random string for our password)
+	const salt = await bcrypt.genSalt();
+
+	// make us of salt to hash our passwords
+	const hashPassword = await bcrypt.hash(req.body.password, salt);
+
 	const user = new User({
 		username: req.body.username,
-		password: req.body.password
+		password: hashPassword
 	});
 
 	try {
 		const savedUser = await user.save(); // wait for the response
-		res.send(savedUser);
+
+		// set what we want to send back to the user (from the savedUser)
+		res.send({ id: savedUser._id, username: savedUser.username });
 	} catch (error) {
 		res.status(400).send(error);
 	}
