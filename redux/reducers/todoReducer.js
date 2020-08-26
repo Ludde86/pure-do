@@ -12,9 +12,10 @@ export default function(state = initialState, action) {
 				todos: action.payload
 			};
 		case CREATE_TODOS:
+			console.log(action.payload.data);
 			return {
 				...state,
-				todos: state.todos.concat(action.payload)
+				todos: state.todos.concat(action.payload.data)
 			};
 	}
 

@@ -18,7 +18,7 @@ export const fetchTodos = () => {
 // here we pass in an object, so we use destructoring to pick what we want to use from this object
 export const createTodo = ({ description }) => {
 	return async (dispatch) => {
-		const response = fetch('http://localhost:3000/api/todos', {
+		const response = await fetch('http://192.168.2.238:3000/api/todos', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -28,8 +28,7 @@ export const createTodo = ({ description }) => {
 			})
 		});
 
-		const responseData = (await response).json();
-		console.log(responseData);
+		const responseData = await response.json();
 
 		dispatch({
 			type: CREATE_TODOS,

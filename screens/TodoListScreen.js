@@ -1,23 +1,42 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, ScrollView, Button, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, ScrollView, Button, FlatList, ActivityIndicator } from 'react-native';
 import TodoItem from '../components/TodoItem';
 import { FloatingAction } from 'react-native-floating-action';
 import { useDispatch, useSelector } from 'react-redux';
 import * as todoAction from '../redux/actions/todoAction';
 
 const TodoListScreen = (props) => {
+	const [ isLoading, setIsLoading ] = useState(false);
+
 	const dispatch = useDispatch();
 
 	// console.log(props);
 	const { todos } = useSelector((state) => state.todo);
-	console.log(todos);
+	// console.log(todos);
 
 	useEffect(
 		() => {
-			dispatch(todoAction.fetchTodos());
+			setIsLoading(true);
+			dispatch(todoAction.fetchTodos()).then(() => setIsLoading(false)).catch(() => setIsLoading(false));
 		},
 		[ dispatch ]
 	);
+
+	if (isLoading) {
+		return (
+			<View style={styles.centered}>
+				<ActivityIndicator size="large" />
+			</View>
+		);
+	}
+
+	if (todos.length === 0 && !isLoading) {
+		return (
+			<View style={styles.centered}>
+				<Text>No todo found</Text>
+			</View>
+		);
+	}
 
 	const actions = [
 		{
@@ -58,7 +77,6 @@ const TodoListScreen = (props) => {
 			<FloatingAction
 				actions={actions}
 				onPressItem={(item) => {
-					console.log('onPress', item);
 					checkActions(item);
 				}}
 			/>
@@ -74,7 +92,12 @@ const styles = StyleSheet.create({
 		flex: 1
 		// justifyContent: 'space-between'
 	},
-	clearBtn: {}
+	clearBtn: {},
+	centered: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	}
 });
 
 export default TodoListScreen;

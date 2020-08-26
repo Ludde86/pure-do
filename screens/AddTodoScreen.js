@@ -1,7 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import * as todoAction from '../redux/actions/todoAction';
 
 // create validation schema for our form
 const formSchema = yup.object({
@@ -9,6 +11,18 @@ const formSchema = yup.object({
 });
 
 const AddTodoScreen = () => {
+	const [ isLoading, setIsLoading ] = useState(false);
+
+	if (isLoading) {
+		return (
+			<View style={styles.centered}>
+				<ActivityIndicator size="large" />
+			</View>
+		);
+	}
+
+	const dispatch = useDispatch();
+
 	return (
 		<View style={styles.form}>
 			<Formik
@@ -17,7 +31,18 @@ const AddTodoScreen = () => {
 				}}
 				validationSchema={formSchema}
 				onSubmit={(values) => {
-					console.log(values);
+					setIsLoading(true);
+					dispatch(todoAction.createTodo(values))
+						.then((result) => {
+							// Alert.alert('Todo created successfully');
+							setIsLoading(false);
+							console.log('Todo created successfully');
+						})
+						.catch((err) => {
+							// Alert.alert('An error occurred', [ { text: 'OK' } ]);
+							setIsLoading(false);
+							console.log('An error has ocurres');
+						});
 				}}
 			>
 				{(props) => (
@@ -62,6 +87,11 @@ const styles = StyleSheet.create({
 	},
 	error: {
 		color: 'red'
+	},
+	centered: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });
 
