@@ -49,7 +49,14 @@ router.post('/register', validate, async (req, res) => {
 	}
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validate, async (req, res) => {
+	const errors = validationResult(req);
+
+	// check for errors
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
+
 	// check if username exists
 	const user = await User.findOne({ username: req.body.username });
 	if (!user) {
