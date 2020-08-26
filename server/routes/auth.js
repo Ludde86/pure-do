@@ -69,6 +69,8 @@ router.post('/login', validate, async (req, res) => {
 		return res.status(404).send('Invalid Password');
 	}
 
+	// create and assign a token
+
 	res.send(`Welcome ${user.username}!`);
 });
 
