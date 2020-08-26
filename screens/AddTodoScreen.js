@@ -33,15 +33,13 @@ const AddTodoScreen = () => {
 				onSubmit={(values) => {
 					setIsLoading(true);
 					dispatch(todoAction.createTodo(values))
-						.then((result) => {
-							// Alert.alert('Todo created successfully');
+						.then(() => {
+							Alert.alert(`${values.description} added`);
 							setIsLoading(false);
-							console.log('Todo created successfully');
 						})
-						.catch((err) => {
-							// Alert.alert('An error occurred', [ { text: 'OK' } ]);
+						.catch(() => {
+							Alert.alert('An error occurred', [ { text: 'OK' } ]);
 							setIsLoading(false);
-							console.log('An error has ocurres');
 						});
 				}}
 			>
