@@ -1,6 +1,8 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 
+const verifyToken = require('./verifyToken');
+
 const Todo = require('../models/Todo');
 
 const router = express.Router();

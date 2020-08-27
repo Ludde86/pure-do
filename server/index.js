@@ -39,19 +39,3 @@ mongoose
 app.get('/', (req, res) => {
 	res.send('Welcome to express web server');
 });
-
-app.delete('/api/todos/:id', (req, res) => {
-	const todo = todos.find((todo) => todo.id === parseInt(req.params.id));
-
-	if (!todo) {
-		return res.status(404).send('The todo cannot be found');
-	}
-
-	const index = todos.indexOf(todo);
-	todos.splice(index, 1);
-
-	res.send({
-		message: 'Todo deleted',
-		data: todo
-	});
-});

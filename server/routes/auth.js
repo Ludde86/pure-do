@@ -74,7 +74,7 @@ router.post('/login', validate, async (req, res) => {
 	// -> set up a key paired with the users id
 	// -> this will be encoded in the token
 	// make use of env variables to store this secret key
-	const token = jwt.sign({ _id: user._id, username: user.username }, 'PURESECRET');
+	const token = jwt.sign({ _id: user._id, username: user.username }, process.env.SECRET);
 
 	// attach the token to the header of our response (auth-token)
 	res.header('auth-token', token).send({ message: `Welcome ${user.username}!`, token });
